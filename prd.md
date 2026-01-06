@@ -66,7 +66,7 @@ databricks-claude-3-7-sonnet
 - eval.json.win_model은 eval_json.eval[0].model_name과 같아야 함
 - eval.json.eval[0].task_duration_sec는 10에서 300사이의 랜덤 숫자
 - eval.json.eval[]의 배열 크기는 항상 1 (model_name 한개만 포함)
-- eval.json.eval[0].avg, min, max, std는 모두 1보다 작아야 함. 그럴듯한 숫자여야 함. (예를 들어 min이 max보다 크지 않아야 함)
+- eval.json.eval[0].avg, min, max, std는 모두 1점에서 5점 사이여야 함. 그럴듯한 숫자여야 함. (예를 들어 min이 max보다 크지 않아야 함, 1 <= min < avg < max <= 5)
 
 created_at: 2025-12-15 01:30:00 (test_set_to에서 30분 더한 값)
 
@@ -137,4 +137,4 @@ databricks-claude-3-7-sonnet
   c. avg와 std가 모두 같다면 그 중 task_duration_sec가 낮은 모델 
 - eval.json.eval[0].task_duration_sec는 10에서 300사이의 랜덤 숫자
 - eval.json.eval[]의 배열 크기는 항상 5 (model_name 다섯개 포함)
-- avg, min, max, std는 모두 1보다 작아야 함. 그럴듯한 숫자여야 함. (예를 들어 min이 max보다 크지 않아야 함)
+- avg, min, max, std는 모두 1점에서 5점 사이여야 함. 그럴듯한 숫자여야 함. (예를 들어 min이 max보다 크지 않아야 함, 1 <= min < avg < max <= 5)

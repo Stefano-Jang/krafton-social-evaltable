@@ -101,7 +101,7 @@ Notebook 실행 시 자동으로 다음 항목들이 검증됩니다:
 2. ✅ Type 분포 확인 (각 type당 125개)
 3. ✅ test_set_from별 row 수 (각 시간대당 4개)
 4. ✅ 시간 필드 일관성 (test_set_from < test_set_to < created_at)
-5. ✅ 통계 값 검증 (min ≤ avg ≤ max < 1.0)
+5. ✅ 통계 값 검증 (1 ≤ min ≤ avg ≤ max ≤ 5)
 
 ## 📝 예시 쿼리
 
@@ -139,9 +139,9 @@ ORDER BY type;
 ## 🎯 주요 기능
 
 ### 1. Realistic Statistics Generation
-- min < avg < max 관계 보장
-- 모든 값 < 1.0
-- 적절한 표준편차 생성
+- 1 <= min < avg < max <= 5 관계 보장
+- 1~5점 척도 사용
+- 적절한 표준편차 생성 (0.2 ~ 0.8)
 
 ### 2. Win Model Selection (challenge_model_eval)
 다음 우선순위로 승리 모델 선택:

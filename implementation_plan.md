@@ -39,9 +39,9 @@ krafton-social-evaltable/
 
 #### 2.3 유틸리티 함수
 - `generate_realistic_stats()`: avg, min, max, std 생성
-  - min < avg < max 보장
-  - std는 적절한 범위 내에서 생성
-  - 모든 값 < 1.0
+  - 1 <= min < avg < max <= 5 보장
+  - std는 적절한 범위 내에서 생성 (0.2 ~ 0.8)
+  - 모든 값은 1~5점 척도
 - `select_win_model()`: challenge_model_eval의 win_model 선택 로직
   - a. avg가 가장 높은 모델
   - b. avg 동일 시 std가 낮은 모델
@@ -85,10 +85,10 @@ CLUSTER BY (type)
     "eval": [
       {
         "model_name": "<win_model과 동일>",
-        "avg": <0 ~ 1 사이 랜덤>,
-        "min": <avg보다 작은 값>,
-        "max": <avg보다 큰 값, 1 미만>,
-        "std": <적절한 표준편차>,
+        "avg": <1 ~ 5 사이 랜덤>,
+        "min": <avg보다 작은 값, 1 이상>,
+        "max": <avg보다 큰 값, 5 이하>,
+        "std": <적절한 표준편차 (0.2 ~ 0.8)>,
         "task_duration_sec": <10 ~ 300 사이 랜덤 정수>
       }
     ]
@@ -134,10 +134,10 @@ CLUSTER BY (type)
     "eval": [
       {
         "model_name": "<22개 중 랜덤 선택된 5개 모델>",
-        "avg": <0 ~ 1 사이 랜덤>,
-        "min": <avg보다 작은 값>,
-        "max": <avg보다 큰 값, 1 미만>,
-        "std": <적절한 표준편차>,
+        "avg": <1 ~ 5 사이 랜덤>,
+        "min": <avg보다 작은 값, 1 이상>,
+        "max": <avg보다 큰 값, 5 이하>,
+        "std": <적절한 표준편차 (0.2 ~ 0.8)>,
         "task_duration_sec": <10 ~ 300 사이 랜덤 정수>
       },
       // ... 총 5개의 모델 평가 결과
@@ -197,8 +197,8 @@ df.write.mode("append").saveAsTable("main_dev.databricks_support.current_model_e
   - challenge_model_eval: 125개의 고유한 test_set_from 값 (6시간씩 증가)
   - 각 test_set_from마다 정확히 4개의 row (type별 1개)
 - 통계 값 검증:
-  - min ≤ avg ≤ max
-  - 모든 값 < 1.0
+  - 1 ≤ min ≤ avg ≤ max ≤ 5
+  - 모든 값은 1~5점 척도
 
 #### 6.2 쿼리 예시
 ```sql

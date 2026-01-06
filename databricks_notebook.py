@@ -81,22 +81,22 @@ print(f"Types per period: {NUM_TYPES}")
 
 def generate_realistic_stats():
     """
-    통계 값 생성: min < avg < max, 모두 < 1.0
-    그럴듯한 통계 값을 생성합니다.
+    통계 값 생성: 1 <= min < avg < max <= 5
+    그럴듯한 통계 값을 생성합니다 (1~5점 척도).
     """
-    # avg를 먼저 생성 (0.7 ~ 0.95 사이)
-    avg = random.uniform(0.7, 0.95)
+    # avg를 먼저 생성 (3.0 ~ 4.5 사이)
+    avg = random.uniform(3.0, 4.5)
     
-    # min은 avg보다 작게 (avg - 0.05 ~ avg - 0.15)
-    min_diff = random.uniform(0.05, 0.15)
-    min_val = max(0.0, avg - min_diff)
+    # min은 avg보다 작게 (avg - 0.3 ~ avg - 0.8), 단 1.0 이상
+    min_diff = random.uniform(0.3, 0.8)
+    min_val = max(1.0, avg - min_diff)
     
-    # max는 avg보다 크게 (avg + 0.02 ~ avg + 0.08), 단 1.0 미만
-    max_diff = random.uniform(0.02, 0.08)
-    max_val = min(0.999, avg + max_diff)
+    # max는 avg보다 크게 (avg + 0.2 ~ avg + 0.5), 단 5.0 이하
+    max_diff = random.uniform(0.2, 0.5)
+    max_val = min(5.0, avg + max_diff)
     
-    # std는 적절한 범위 (0.02 ~ 0.10)
-    std = random.uniform(0.02, 0.10)
+    # std는 적절한 범위 (0.2 ~ 0.8)
+    std = random.uniform(0.2, 0.8)
     
     # 소수점 2자리로 반올림
     return {
