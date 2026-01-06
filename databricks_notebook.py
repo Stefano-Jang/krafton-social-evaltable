@@ -13,7 +13,7 @@
 import random
 import json
 from datetime import datetime, timedelta
-from pyspark.sql.types import StructType, StructField, LongType, StringType, TimestampType, IntegerType
+from pyspark.sql.types import StructType, StructField, StringType, TimestampType, IntegerType
 
 # COMMAND ----------
 
@@ -322,8 +322,30 @@ def insert_current_model_eval_data():
     
     print(f"Generated {len(data)} rows")
     
-    # DataFrame 생성
-    df = spark.createDataFrame(data)
+    # 스키마 정의
+    schema = StructType([
+        StructField("type", StringType(), False),
+        StructField("eval_model", StringType(), False),
+        StructField("test_set_from", TimestampType(), False),
+        StructField("test_set_to", TimestampType(), False),
+        StructField("test_set_size", IntegerType(), False),
+        StructField("eval_json", StringType(), False),
+        StructField("created_at", TimestampType(), False)
+    ])
+    
+    # DataFrame 생성 (스키마 명시)
+    df = spark.createDataFrame(data, schema)
+    
+    # eval_json을 VARIANT 타입으로 변환
+    df = df.selectExpr(
+        "type",
+        "eval_model",
+        "test_set_from",
+        "test_set_to",
+        "test_set_size",
+        "parse_json(eval_json) as eval_json",
+        "created_at"
+    )
     
     # 테이블에 삽입
     print(f"Inserting data into {CURRENT_TABLE}...")
@@ -361,8 +383,30 @@ def insert_challenge_model_eval_data():
     
     print(f"Generated {len(data)} rows")
     
-    # DataFrame 생성
-    df = spark.createDataFrame(data)
+    # 스키마 정의
+    schema = StructType([
+        StructField("type", StringType(), False),
+        StructField("eval_model", StringType(), False),
+        StructField("test_set_from", TimestampType(), False),
+        StructField("test_set_to", TimestampType(), False),
+        StructField("test_set_size", IntegerType(), False),
+        StructField("eval_json", StringType(), False),
+        StructField("created_at", TimestampType(), False)
+    ])
+    
+    # DataFrame 생성 (스키마 명시)
+    df = spark.createDataFrame(data, schema)
+    
+    # eval_json을 VARIANT 타입으로 변환
+    df = df.selectExpr(
+        "type",
+        "eval_model",
+        "test_set_from",
+        "test_set_to",
+        "test_set_size",
+        "parse_json(eval_json) as eval_json",
+        "created_at"
+    )
     
     # 테이블에 삽입
     print(f"Inserting data into {CHALLENGE_TABLE}...")
